@@ -19,6 +19,7 @@ require 'net/http'
 require 'cgi'
 require 'time'
 require 'nokogiri'
+require "httparty"
 
 class YahooWeather
   VERSION = '1.2.0'
@@ -28,13 +29,13 @@ class YahooWeather
   end
 end
 
-require 'yahoo-weather/astronomy'
-require 'yahoo-weather/atmosphere'
-require 'yahoo-weather/client'
-require 'yahoo-weather/condition'
-require 'yahoo-weather/forecast'
-require 'yahoo-weather/image'
-require 'yahoo-weather/location'
-require 'yahoo-weather/response'
-require 'yahoo-weather/units'
-require 'yahoo-weather/wind'
+require_relative 'yahoo-weather/astronomy'
+require_relative 'yahoo-weather/atmosphere'
+require_relative 'yahoo-weather/client'
+require_relative 'yahoo-weather/condition'
+require_relative 'yahoo-weather/forecast'
+require_relative 'yahoo-weather/image'
+require_relative 'yahoo-weather/location'
+require_relative 'yahoo-weather/response'
+require_relative 'yahoo-weather/units'
+require_relative 'yahoo-weather/wind'

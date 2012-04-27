@@ -1,10 +1,14 @@
 # The main client object through which the Yahoo! Weather service may be accessed.
 class YahooWeather::Client
+  
+  include HTTParty
   # the url with which we obtain weather information from yahoo
   @@API_URL = "http://weather.yahooapis.com/forecastrss"
-
-  def initialize (api_url = @@API_URL)
+  # @@APP_ID = "LIST_FREE_YAHOO_API_HERE"
+  
+  def initialize (app_id = @@APP_ID,api_url = @@API_URL)
     @api_url = api_url
+    @app_id = app_id
   end
 
   # Returns a YahooWeather::Response object detailing the current weather
@@ -46,9 +50,9 @@ class YahooWeather::Client
   # +Fahrenheit+ as YahooWeather::Units::FAHRENHEIT, or +Celsius+ as
   # YahooWeather::Units::CELSIUS, and defaults to fahrenheit.
   #
-  def lookup_location (location, units = 'f')
-    url = @api_url + '?p=' + CGI.escape(location) + '&u=' + CGI.escape(units)
-    _lookup(location, url)
+  def lookup_zip(zip, units = 'f')
+    woeid = woe_lookup(zip)
+    lookup_by_woeid(woeid)
   end
 
   private
@@ -65,6 +69,11 @@ class YahooWeather::Client
       # create the response object
       doc = Nokogiri::XML.parse(response)
       YahooWeather::Response.new(src, url, doc)
+    end
+    
+    def woe_lookup(zip)
+      p ydata = HTTParty.get("http://where.yahooapis.com/v1/places.q('#{zip}')?appid=[#{@app_id}]")
+      woe_id = ydata["places"]["place"]["woeid"]
     end
 
 end
