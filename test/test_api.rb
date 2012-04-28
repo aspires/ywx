@@ -16,16 +16,6 @@ class TestAPI < Test::Unit::TestCase
                            'Seattle', 'WA', 'US')
   end
 
-  def test_lookup_location
-    # check france just for fun with the sample france location code from the
-    # yahoo weather developer page
-    request_location = 'FRXX0076'
-    response = @client.lookup_location(request_location)
-    _assert_valid_response(response, request_location, 
-                           YahooWeather::Units::FAHRENHEIT, 
-                           'Paris', '', 'FR')
-  end
-
   def test_units
     request_location = '10001'
     city = 'New York'

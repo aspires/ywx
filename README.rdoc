@@ -1,7 +1,5 @@
 = yahoo-weather
 
-= Currently Undergoing 1.9.x compatability upgrades, and revamping Lookup_Location()
-
 == About
 
 yahoo-weather provides an object-oriented interface to the Yahoo! Weather XML

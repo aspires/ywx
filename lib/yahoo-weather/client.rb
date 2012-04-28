@@ -1,9 +1,11 @@
 # The main client object through which the Yahoo! Weather service may be accessed.
 class YahooWeather::Client
-  
   include HTTParty
+  
   # the url with which we obtain weather information from yahoo
   @@API_URL = "http://weather.yahooapis.com/forecastrss"
+  
+  # Uncomment and fill in below section for hard embedded connection
   # @@APP_ID = "LIST_FREE_YAHOO_API_HERE"
   
   def initialize (app_id = @@APP_ID,api_url = @@API_URL)
@@ -36,15 +38,7 @@ class YahooWeather::Client
   # Returns a YahooWeather::Response object detailing the current weather
   # information for the specified location.
   #
-  # NOTE: This method is deprecated as Yahoo has deprecated this
-  # non-WOEID-based lookup function.  Please use the new
-  # +lookup_by_woeid+ method instead.
-  #
-  # +location+ can be either a US zip code or a location code.  Location
-  # codes can be looked up at http://weather.yahoo.com, where it will appear
-  # in the URL that results from searching on the city or zip code.  For
-  # instance, searching on 'Seattle, WA' results in a URL ending in
-  # 'USWA0395.html', so the location code for Seattle is 'USWA0395'.
+  # +zip+ MUST BE A US ZIP CODE
   #
   # +units+ allows specifying whether to retrieve information in
   # +Fahrenheit+ as YahooWeather::Units::FAHRENHEIT, or +Celsius+ as

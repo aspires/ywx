@@ -1,6 +1,5 @@
 CHANGELOG.rdoc
-examples/example.rb
-examples/get-weather.rb
+examples/demo.rb
 lib/yahoo-weather/astronomy.rb
 lib/yahoo-weather/atmosphere.rb
 lib/yahoo-weather/client.rb
@@ -14,5 +13,7 @@ lib/yahoo-weather/wind.rb
 lib/yahoo-weather.rb
 LICENSE
 Rakefile
+Gemfile
+Gemfile.lock
 README.rdoc
 test/test_api.rb
