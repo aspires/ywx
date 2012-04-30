@@ -22,7 +22,7 @@ require 'nokogiri'
 require "httparty"
 
 class YahooWeather
-  VERSION = '1.2.0'
+  VERSION = '0.1.2'
 
   def self._parse_time (text)
     (text) ? Time.parse(text) : nil

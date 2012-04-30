@@ -10,10 +10,8 @@ lib/yahoo-weather/location.rb
 lib/yahoo-weather/response.rb
 lib/yahoo-weather/units.rb
 lib/yahoo-weather/wind.rb
-lib/yahoo-weather.rb
+lib/ywx.rb
 LICENSE
-Rakefile
 Gemfile
-Gemfile.lock
 README.rdoc
 test/test_api.rb
