@@ -1,4 +1,4 @@
-require_relative "lib/ywx.rb"
+require_relative "../lib/ywx.rb"
 require "pp"
 
 #Get your API key here(http://developer.yahoo.com/)
