@@ -1,111 +1,154 @@
-= YWx (Yahoo Weather) gem 
+= YWx (Yahoo Weather) gem
 
-This README is currently under construction. The documentation below does not reflect recent updates 
-for Ruby 1.9 compatabiliy, nor does it cover recently added Lookup By Zipcode functionality. The
-most up to date documentation will best be found in the examples/demo.rb file. This demonstrates the
-Lookup By Zipcode function. The new install command is as follows:
+Reliable weather data for your next project, and a great way to introduce APIs to new programmers.
 
- gem install ywx
+== What Is This?
 
-Thanks, and happy hacking.
+YWx provides a Ruby interface to the Yahoo Weather XML RSS feed detailed at http://developer.yahoo.com/weather.
 
-== About
+Weather data is exciting. Its broad in scope, yet very practical in everyday implementation. Most important, it's a perfect dataset for young programmers to begin interacting with. The Yahoo Weather API is a particularly easy way to start working with outside data.
 
-yahoo-weather provides an object-oriented interface to the Yahoo! Weather XML
-RSS feed detailed at http://developer.yahoo.com/weather.
-
-People care a lot about the weather.  This may seem ironic given they
-can just glance out the window.  However, we can all understand a
-fascination with details and forecasting.
-
-Log the weather information to your database!  Graph it to your
-heart's content!  Write a widget that emails the weather to your cell
-phone every five minutes with a link to your friend's PayPal account
-to deposit money if the weather's sunny and you both bet that it would
-be rainy. And the fun doesn't have to stop there.
-
-The RubyForge project page for this library is at
-http://rubyforge.org/projects/yahoo-weather.
-
-Source code is at http://github.com/shaper/yahoo-weather.
-
-NOTE: This library was updated as of December 2009 to use a new
-WOEID-based lookup interface.  Yahoo has deprecated the older
-non-WOEID-based lookup API.  The archived page with the deprecated API
-details is at:
-
-http://developer.yahoo.com/weather/archive.html
-
-The older interface is still operational but users of this library
-should shift from using YahooWeather::Client::lookup_location to
-YahooWeather::Client::lookup_by_woeid.
+Log the weather information to your database!  Graph it to your heart's content!  Write a widget that emails the weather to your cell phone. There are lots of opportunities to learn and experiment.
 
 == Installation
 
-Install +rubygems+ if you don't already have it.  See http://rubyforge.org/projects/rubygems/.
+Install the gem by executing:
 
-Then install the gem by executing:
+ % gem install ywx
 
- % gem install yahoo-weather
+Then, apply for a Yahoo GeoPlanet Application ID at http://developer.yahoo.com/geo/geoplanet/
+
+The application is free, easy and fast. 
 
 == Usage
 
 A simple example program:
 
- require 'rubygems'
- require 'yahoo-weather'
-
- @client = YahooWeather::Client.new
- # look up WOEID via http://weather.yahoo.com; enter location by city
- # name or zip and WOEID is at end of resulting page url.  herein we use
- # the WOEID for Santa Monica, CA.
- response = @client.lookup_by_woeid(2488892)
-
- # straight text output
- print <<edoc
- #{response.title}
- #{response.condition.temp} degrees
- #{response.condition.text}
- edoc
-
- # sample html output
- print <<edoc
- <div>
-   <img src="#{response.image.url}"><br/>
-   #{response.condition.temp} degrees #{response.units.temperature}<br/>
-   #{response.condition.text}<br>
-   Forecast:<br/>
-   #{response.forecasts[0].day} - #{response.forecasts[0].text}.  High: #{response.forecasts[0].high} Low: #{response.forecasts[0].low}<br/>
-   #{response.forecasts[1].day} - #{response.forecasts[1].text}.  High: #{response.forecasts[1].high} Low: #{response.forecasts[1].low}<br/>
-   More information <a href="#{response.page_url}">here</a>.
- </div>
- edoc
-    
+ require 'ywx'
+ require 'pp'
+ appid = 'INSERT_YAHOO_APPID_HERE'
+  
+ @client = YahooWeather::Client.new(appid)
+  
+ response = @client.lookup_zip(73072)
+ pp "Info"
+ pp response.title
+ pp response.condition.temp
+ pp response.condition.text
+ pp "Conditions"
+ pp response.condition.temp
+ pp response.units.temperature
+ pp response.condition.text
+ pp "Forecast"
+ pp "#{response.forecasts[0].day} - #{response.forecasts[0].text}.  High: #{response.forecasts[0].high} Low: #{res
+ pp "#{response.forecasts[1].day} - #{response.forecasts[1].text}.  High: #{response.forecasts[1].high} Low: #{res
+                                  
 Produces output as:
 
- Conditions for Santa Monica, CA at 10:51 am PST
- 56 degrees
- Partly Cloudy
- <div>
-   <img src="http://l.yimg.com/a/i/us/nws/th/main_142b.gif"><br/>
-   56 degrees F<br/>
-   Partly Cloudy<br>
-   Forecast:<br/>
-   Sat - Mostly Cloudy.  High: 59 Low: 46<br/>
-   Sun - Partly Cloudy.  High: 64 Low: 48<br/>
-   More information <a href="http://us.rd.yahoo.com/dailynews/rss/weather/Santa_Monica__CA/*http://weather.yahoo.com/forecast/USCA1024_f.html">here</a>.
- </div>
+ "Info"
+ "Conditions for Norman, OK at 4:54 pm CDT"
+ 84
+ "Mostly Cloudy"
+ "Conditions"
+ 84
+ "F"
+ "Mostly Cloudy"
+ "Forecast"
+ "Mon - Scattered Thunderstorms.  High: 78 Low: 67"
+ "Tue - Partly Cloudy/Wind.  High: 85 Low: 69"
 
 There is a variety of detailed weather information in other attributes of the
 YahooWeather::Response object.
 
-== License
+== Full Data Readout
 
-This library is provided via the GNU LGPL license at http://www.gnu.org/licenses/lgpl.html.
+For a full display of all the available data in the request, run the following code
 
-== Author
+ require 'ywx'
+ require 'pp'
+ appid = 'INSERT_YAHOO_APPID_HERE'
+ 
+ @client = YahooWeather::Client.new(appid)
+ 
+ pp response = @client.lookup_zip(73072)
 
-Copyright 2006 - 2009, Walter Korman <shaper@fatgoose.com>, 
-http://lemurware.blogspot.com.
+This produces a readout like the following:
 
-Thanks to Matthew Berk for inspiration and initial hack.
+ #<YahooWeather::Response:0x007fc55c942090
+  @astronomy=
+   #<YahooWeather::Astronomy:0x007fc55c93fde0
+    @sunrise=2012-04-30 06:37:00 -0500,
+    @sunset=2012-04-30 20:14:00 -0500>,
+  @atmosphere=
+   #<YahooWeather::Atmosphere:0x007fc55c91aa90
+    @barometer="steady",
+    @humidity=58,
+    @pressure=29.88,
+    @visibility=10>,
+  @condition=
+   #<YahooWeather::Condition:0x007fc55c902440
+    @code=28,
+    @date=2012-04-30 16:54:00 -0500,
+    @temp=84,
+    @text="Mostly Cloudy">,
+  @description=
+   "\n<img src=\"http://l.yimg.com/a/i/us/we/52/28.gif\"/><br />\n<b>Current Conditions:</b><br />\nMostly Cloudy, 84 F<BR />\n<BR /><b>Forecast:</b><BR />\nMon - Scattered Thunderstorms. High: 78 Low: 67<br />\nTue - Partly Cloudy/Wind. High: 85 Low: 69<br />\n<br />\n<a href=\"http://us.rd.yahoo.com/dailynews/rss/weather/Norman__OK/*http://weather.yahoo.com/forecast/USOK0388_f.html\">Full Forecast at Yahoo! Weather</a><BR/><BR/>\n(provided by <a href=\"http://www.weather.com\" >The Weather Channel</a>)<br/>\n",
+  @forecasts=
+   [#<YahooWeather::Forecast:0x007fc55c8e33d8
+     @code=47,
+     @date=2012-04-30 00:00:00 -0500,
+     @day="Mon",
+     @high=78,
+     @low=67,
+     @text="Scattered Thunderstorms">,
+    #<YahooWeather::Forecast:0x007fc55c8d5a58
+     @code=24,
+     @date=2012-05-01 00:00:00 -0500,
+     @day="Tue",
+     @high=85,
+     @low=69,
+     @text="Partly Cloudy/Wind">],
+  @image=
+   #<YahooWeather::Image:0x007fc55c9180d8
+    @height=18,
+    @link="http://weather.yahoo.com",
+    @title="Yahoo! Weather",
+    @url="http://l.yimg.com/a/i/brand/purplelogo//uh/us/news-wea.gif",
+    @width=142>,
+  @latitude=35.22,
+  @location=
+   #<YahooWeather::Location:0x007fc55c924a40
+    @city="Norman",
+    @country="United States",
+    @region="OK">,
+  @longitude=-97.51,
+  @page_url=
+   "http://us.rd.yahoo.com/dailynews/rss/weather/Norman__OK/*http://weather.yahoo.com/forecast/USOK0388_f.html",
+  @request_location="12789594",
+  @request_url="http://weather.yahooapis.com/forecastrss?w=12789594&u=f",
+  @title="Conditions for Norman, OK at 4:54 pm CDT",
+  @units=
+   #<YahooWeather::Units:0x007fc55c922d80
+    @distance="mi",
+    @pressure="in",
+    @speed="mph",
+    @temperature="F">,
+  @wind=
+   #<YahooWeather::Wind:0x007fc55c9207d8 
+    @chill=84, 
+    @direction=170,
+    @speed=14>>
+
+The the specific data points are easy to access. For example, if you wanted the forecasted high temperature for tomorrow, use the following line.
+
+ response.forecasts[1].high
+
+Or if you wanted to isolate the latitude and longitude of the reading station, simply run the following
+
+ response.latitude
+ response.longitude
+
+Its that easy. Start building something.
+
+Thanks, and happy hacking.
+
