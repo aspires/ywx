@@ -1,4 +1,13 @@
-= yahoo-weather
+= YWx (Yahoo Weather) gem 
+
+This README is currently under construction. The documentation below does not reflect recent updates 
+for Ruby 1.9 compatabiliy, nor does it cover recently added Lookup By Zipcode functionality. The
+most up to date documentation will best be found in the examples/demo.rb file. This demonstrates the
+Lookup By Zipcode function. The new install command is as follows:
+
+% gem install ywx
+
+Thanks, and happy hacking.
 
 == About
 
