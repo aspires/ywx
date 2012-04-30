@@ -66,7 +66,7 @@ class YahooWeather::Client
     end
     
     def woe_lookup(zip)
-      p ydata = HTTParty.get("http://where.yahooapis.com/v1/places.q('#{zip}')?appid=[#{@app_id}]")
+      ydata = HTTParty.get("http://where.yahooapis.com/v1/places.q('#{zip}')?appid=[#{@app_id}]")
       woe_id = ydata["places"]["place"]["woeid"]
     end
 
